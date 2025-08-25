@@ -62,7 +62,7 @@ function Winget-Install($id,$name){
     "--accept-package-agreements","--accept-source-agreements",
     "--scope","machine","--disable-interactivity"
   )
-  if($r.ExitCode -ne 0){ Err "$name: ExitCode=$($r.ExitCode)"; if($r.StdErr){Info "stderr:`n$($r.StdErr.Trim())"} }
+  if($r.ExitCode -ne 0){ Err "$name`: ExitCode=$($r.ExitCode)"; if($r.StdErr){Info "stderr:`n$($r.StdErr.Trim())"} }
 }
 
 function Winget-Upgrade($id,$name){
@@ -73,7 +73,7 @@ function Winget-Upgrade($id,$name){
     "--include-unknown","--silent"
   ) 900
   if($r.ExitCode -eq 0){ Ok "$name vérifié/mis à jour." }
-  else { Info "$name: aucune MAJ ou mapping winget indisponible." }
+  else { Info "$name`: aucune MAJ ou mapping winget indisponible." }
 }
 
 # ---- Go ----
