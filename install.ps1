@@ -1,32 +1,57 @@
 # Requires PowerShell running as Administrator
 
-# Function to check if a package is installed via winget
+# --- FUNCTIONS ---
+
+# Vérifie si un package est installé via winget
 function Is-Installed($id) {
     return (winget list --id $id | Select-String $id) -ne $null
 }
 
-# Install Git
+# Vérifie si WSL est installé
+function Is-WSLInstalled {
+    return (wsl --version 2>$null) -ne $null
+}
+
+# --- INSTALLATIONS ---
+
+# Git
 if (Is-Installed "Git.Git") {
-    Write-Host "Git is already installed."
+    Write-Output "Git est déjà installé."
 } else {
-    Write-Host "Installing Git..."
+    Write-Output "Installation de Git..."
     winget install --id Git.Git -e --source winget
 }
 
-# Install Python 3.13
+# Python 3.13
 if (Is-Installed "Python.Python.3.13") {
-    Write-Host "Python 3.13 is already installed."
+    Write-Output "Python 3.13 est déjà installé."
 } else {
-    Write-Host "Installing Python 3.13..."
+    Write-Output "Installation de Python 3.13..."
     winget install --id Python.Python.3.13 -e --source winget
 }
 
-# Install Docker Desktop
+# Docker Desktop
 if (Is-Installed "Docker.DockerDesktop") {
-    Write-Host "Docker Desktop is already installed."
+    Write-Output "Docker Desktop est déjà installé."
 } else {
-    Write-Host "Installing Docker Desktop..."
+    Write-Output "Installation de Docker Desktop..."
     winget install --id Docker.DockerDesktop -e --source winget
 }
 
-Write-Host "All installations checked/completed. Restart terminal for changes to take effect."
+# Google Chrome
+if (Is-Installed "Google.Chrome") {
+    Write-Output "Google Chrome est déjà installé."
+} else {
+    Write-Output "Installation de Google Chrome..."
+    winget install --id Google.Chrome -e --source winget
+}
+
+# WSL (Windows Subsystem for Linux)
+if (Is-WSLInstalled) {
+    Write-Output "WSL est déjà installé."
+} else {
+    Write-Output "Installation de WSL et d'Ubuntu par défaut..."
+    wsl --install
+}
+
+Write-Output "Toutes les installations sont vérifiées/terminées. Redémarrez votre terminal (et votre PC si Docker Desktop vient d'être installé)."
